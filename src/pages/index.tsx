@@ -4,7 +4,7 @@ import { Inter } from '@next/font/google'
 import styles from '../../styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
-
+const scaleDownBackground = 5
 export default function Home() {
   return (
     <>
@@ -15,7 +15,33 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-
+        <div>
+          <div>
+            <Image alt='' src={require('../../statics/we.jpg')} height={3750 / scaleDownBackground} width={3000 / scaleDownBackground}/>
+            <h1>Guilherme e Thayná</h1>
+            <nav>
+              <ul>
+                <li>
+                  <a href="">Confirmar presença</a>
+                </li>
+                <li>
+                  <a href="">Informações</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div> 
+          <h2>Informações</h2> 
+          <div>
+            <h3>Cerimônia</h3>
+            <p>Será realizada às 17h do dia 14 de Outubro de 2023 na Igreja da Matriz</p>
+          </div>
+          <div>
+            <h3>Recepção</h3>
+            <p>A festa será realizada logo após a cerimônia, a partir de 19h no Mirante Clube</p>
+          </div>
+        </div>
       </main>
     </>
   )

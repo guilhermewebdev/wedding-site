@@ -4,7 +4,7 @@ services:
     image: node:lts
     working_dir: /api
     volumes:
-      - .:/api
+      - .\:/api:z
     ports:
       - 3000:3000
     command: npm run dev
