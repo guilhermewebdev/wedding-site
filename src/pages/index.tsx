@@ -5,6 +5,7 @@ import styles from '../../styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 const scaleDownBackground = 5
+
 export default function Home() {
   return (
     <>
@@ -15,10 +16,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div>
-          <div>
-            <Image alt='' src={require('../../statics/we.jpg')} height={3750 / scaleDownBackground} width={3000 / scaleDownBackground}/>
-            <h1>Guilherme e Thayná</h1>
+        <div className={styles.home}>
+          <Image className={styles.backgroundImage} alt='' src={require('../../statics/we.jpg')} height={3750 / scaleDownBackground} width={3000 / scaleDownBackground}/>
+          <div className={styles.homeText}> 
+            <h1>Guilherme & Thayná</h1>
             <nav>
               <ul>
                 <li>
