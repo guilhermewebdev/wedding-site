@@ -17,9 +17,15 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.home}>
-          <Image className={styles.backgroundImage} alt='' src={require('../../statics/we.jpg')} height={3750 / scaleDownBackground} width={3000 / scaleDownBackground}/>
+          <Image
+            className={styles.backgroundImage} 
+            alt='' 
+            src={require('../../statics/we.jpg')} 
+            height={3750 / scaleDownBackground} 
+            width={3000 / scaleDownBackground}
+          />
           <div className={styles.homeText}> 
-            <h1>Guilherme & Thayná</h1>
+            <h1 className={styles.title}>Guilherme & Thayná</h1>
             <nav>
               <ul>
                 <li>
