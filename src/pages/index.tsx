@@ -26,7 +26,7 @@ export default function Home() {
           />
           <div className={styles.homeText}> 
             <h1 className={styles.title}>Guilherme & Thayná</h1>
-            <nav>
+            <nav className={styles.navigation}>
               <ul>
                 <li>
                   <a href="">Confirmar presença</a>
