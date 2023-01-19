@@ -26,17 +26,29 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 30px;
-    color: rgb(255, 217, 1);
+    color: var(--primary-color);
 }
 
 .title {
     font-family: Calligraffitti, "Brush Script MT";
     font-size: 50px;
+    margin-bottom: 15px;
 }
 
 @media (min-width: 1200px) {
    .backgroundImage {
         object-position: 0px -400px;
     }
+}
+.navigation ul {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;  
+    font-size: 20px;
+    color: var(--primary-color);
+
 }
   
