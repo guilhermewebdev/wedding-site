@@ -33,7 +33,7 @@ export default function Home() {
             </nav>
           </div>
         </div>
-        <div className={styles.information}>
+        <div className={styles.centralize}>
           <h2 className={styles.title} id="information">Informações</h2>
           <div className={styles.textInformation}>
             <div>
