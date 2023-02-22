@@ -24,6 +24,9 @@ export default function Home() {
                         <label htmlFor="phone">Telefone</label>
                         <input id="phone" />
                     </div>
+                    <div className={styles.confirmationArea}>
+                        <button>Confirmar</button>
+                    </div>
                 </form>
             </main>
 
