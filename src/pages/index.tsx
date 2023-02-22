@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../../styles/Styles.module.css'
 
 const scaleDownBackground = 5
@@ -24,7 +25,9 @@ export default function Home() {
             <nav className={styles.navigation}>
               <ul>
                 <li>
-                  <a href="">Confirmar presença</a>
+                  <Link href="/rsvp">
+                    Confirmar presença
+                  </Link>
                 </li>
                 <li>
                   <a href="#information">Informações</a>
