@@ -9,14 +9,14 @@ export default function Home() {
                 <title>Confirme Sua Presença</title>
             </Head>
             <main className={`${styles.main} ${styles.centralize}`}>
-                <div>
+                <div className={styles.confirmationNavigation}>
                     <Link href="/">
                         Início
                     </Link>
                 </div>
-                <div className={styles.centralize}>
+                <div className={`${styles.centralize} ${styles.padding4}`}>
                     <h1 className={styles.title}>Confirme Sua Presença</h1>
-                <h3>Preencha os dados e coloque o código em seu voucher. Código único por pessoa!</h3>
+                    <h3 className={styles.fillData}>Preencha os dados e coloque o código em seu voucher. Código único por pessoa!</h3>
                 </div>
                 <form className={styles.form}>
                     <div className={styles.field}>

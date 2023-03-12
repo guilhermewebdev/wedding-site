@@ -36,7 +36,7 @@ export default function Home() {
             </nav>
           </div>
         </div>
-        <div className={styles.centralize}>
+        <div className={`${styles.centralize} ${styles.padding5}`}>
           <h2 className={styles.title} id="information">Informações</h2>
           <div className={styles.textInformation}>
             <div>
