@@ -16,8 +16,8 @@ export default function Home() {
                 </div>
                 <div className={styles.centralize}>
                     <h1 className={styles.title}>Confirme Sua Presença</h1>
+                <h3>Preencha os dados e coloque o código em seu voucher. Código único por pessoa!</h3>
                 </div>
-
                 <form className={styles.form}>
                     <div className={styles.field}>
                         <label htmlFor="name">Nome</label>
@@ -30,6 +30,10 @@ export default function Home() {
                     <div className={styles.field}>
                         <label htmlFor="phone">Telefone</label>
                         <input id="phone" />
+                    </div>
+                    <div className={styles.field}>
+                        <label htmlFor="Código">Código</label>
+                        <input id="código" />
                     </div>
                     <div className={styles.confirmationArea}>
                         <button>Confirmar</button>
