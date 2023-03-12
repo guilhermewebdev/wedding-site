@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from '../../styles/Styles.module.css'
 
-export default function Home() {
+export default function RSVP() {
     return (
         <>
             <Head>
