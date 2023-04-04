@@ -2,7 +2,12 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from '../../styles/Styles.module.css'
 
-export default function RSVP() {
+interface RSVPProps {
+    code?: string;
+}
+
+export default function RSVP(props: RSVPProps) {
+    const { code } = props;
     return (
         <>
             <Head>
@@ -31,10 +36,12 @@ export default function RSVP() {
                         <label htmlFor="phone">Telefone</label>
                         <input id="phone" />
                     </div>
-                    <div className={styles.field}>
-                        <label htmlFor="Código">Código</label>
-                        <input id="código" />
-                    </div>
+                    {!code && (
+                        <div className={styles.field}>
+                            <label htmlFor="Código">Código</label>
+                            <input id="código" />
+                        </div>
+                    )}
                     <div className={styles.confirmationArea}>
                         <button>Confirmar</button>
                     </div>
