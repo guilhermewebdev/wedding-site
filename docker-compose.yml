@@ -3,8 +3,10 @@ services:
   api:
     image: node:lts
     working_dir: /api
+    platform: linux/amd64
     volumes:
-      - .\:/api:z
+      - .:/api:z
+    entrypoint: ./entrypoint.sh
     ports:
       - 3000:3000
     command: npm run dev
