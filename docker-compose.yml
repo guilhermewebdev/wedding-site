@@ -7,6 +7,21 @@ services:
     volumes:
       - .:/api:z
     entrypoint: ./entrypoint.sh
+    depends_on:
+      - db
     ports:
       - 3000:3000
     command: npm run dev
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: db_test
+      DB_NAME: test
+  db:
+    image: mongo
+    restart: always
+    platform: linux/amd64
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: db_test
+      MONGO_INITDB_DATABASE: test
