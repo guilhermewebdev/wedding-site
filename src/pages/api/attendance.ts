@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { CreatedGuestPresenter } from '../../modules/attendance/presenters';
 import { app } from '../../modules/application';
+import { processError } from '../../lib/exceptions';
 
 const { attendance: { controller } } = app();
 
@@ -13,7 +14,8 @@ export default async function handler(
     const response = await controller.create(req.body)
     res.status(201).json(response);
   } catch (error: any) {
-    res.status(500).json({ message: error?.message })
+    const { httpStatus, message } = await processError(error);
+    res.status(httpStatus).json({ message });
   } finally {
     res.end()
   }
