@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import { AttendanceRepository } from "./adapters/repository";
 import { Guest } from "./entities";
 
@@ -15,6 +16,12 @@ export default class AttendanceServiceImpl implements AttendanceService {
     }
 
     public async create(payload: AttendanceConfirmationPayload) {
-        return this.repository.create(payload);
+        if (!payload.email && !payload.phone) {
+            throw new Error('Informe o telefone ou o email');
+        }
+        return this.repository.create({
+            ...payload,
+            id: v4(),
+        });
     }
 }

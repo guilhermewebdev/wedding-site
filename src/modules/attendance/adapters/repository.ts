@@ -1,9 +1,9 @@
 import { ConfirmAttendanceDTO } from "../DTOs/createGuest";
-import { Guest } from "../entities";
+import { Code, Guest } from "../entities";
 import { Db } from "mongodb";
 
 export interface AttendanceRepository {
-    create(payload: ConfirmAttendanceDTO): Promise<Guest>;
+    create(payload: Guest): Promise<Guest>;
 }
 
 export default class AttendanceRepositoryImpl implements AttendanceRepository {
@@ -18,7 +18,7 @@ export default class AttendanceRepositoryImpl implements AttendanceRepository {
     }
 
     get codes() {
-        return this.db.collection('codes');
+        return this.db.collection<Code>('codes');
     }
 
     public async create(payload: Guest) {

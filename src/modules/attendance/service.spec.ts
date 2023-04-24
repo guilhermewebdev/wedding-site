@@ -1,7 +1,7 @@
 import { ConfirmAttendanceDTO } from "./DTOs/createGuest";
 import { AttendanceRepository } from "./adapters/repository";
 import { Guest } from "./entities";
-import AttendanceServiceImpl from "./service";
+import AttendanceServiceImpl, { AttendanceService } from "./service";
 import { v4 } from "uuid";
 
 class AttendantRepositoryMock implements AttendanceRepository {
@@ -13,9 +13,12 @@ class AttendantRepositoryMock implements AttendanceRepository {
     }
 }
 
-describe('attendant.service', () => {
+describe('AttendantService', () => {
+    let service: AttendanceService;
+    beforeEach(() => {
+        service = new AttendanceServiceImpl(new AttendantRepositoryMock());
+    })
     it('.create', async () => {
-        const service = new AttendanceServiceImpl(new AttendantRepositoryMock());
         const created = await service.create({
             codeId: v4(),
             name: 'Test Guest',
