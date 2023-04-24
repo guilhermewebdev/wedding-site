@@ -8,6 +8,7 @@ const mockDB = ({
             insertedId: 1
         })),
         findOne: jest.fn(() => ({
+            _id: 1,
             id: v4(),
         })),
     })),
@@ -18,8 +19,8 @@ describe('AttendanceRepository', () => {
     beforeEach(() => {
         repository = new AttendanceRepositoryImpl(mockDB);
     })
-    it('.create', async () => {
-        const created = await repository.create({
+    it('.createGuest', async () => {
+        const created = await repository.createGuest({
             codeId: v4(),
             name: 'Test Guest',
             email: 'test@test.com',
@@ -27,4 +28,8 @@ describe('AttendanceRepository', () => {
         });
         expect(typeof created.id).toEqual('string');
     });
+    it('.getCode', async () => {
+        const code = await repository.getCode({ code: 'test' });
+        expect(typeof code).toEqual('object');
+    })
 })

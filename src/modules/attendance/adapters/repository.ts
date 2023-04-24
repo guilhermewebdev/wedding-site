@@ -1,9 +1,11 @@
-import { ConfirmAttendanceDTO } from "../DTOs/createGuest";
+import { InternalError } from "../../../lib/exceptions";
 import { Code, Guest } from "../entities";
 import { Db } from "mongodb";
 
 export interface AttendanceRepository {
-    create(payload: Guest): Promise<Guest>;
+    createGuest(payload: Guest): Promise<Guest>;
+    getCode(filter: Partial<Code>): Promise<Code | null>;
+    getGuest(filter: Partial<Guest>): Promise<Guest | null>;
 }
 
 export default class AttendanceRepositoryImpl implements AttendanceRepository {
@@ -21,12 +23,20 @@ export default class AttendanceRepositoryImpl implements AttendanceRepository {
         return this.db.collection<Code>('codes');
     }
 
-    public async create(payload: Guest) {
+    public async createGuest(payload: Guest) {
         const { insertedId } = await this.guests.insertOne(payload);
         const recovered = await this.guests.findOne<Guest>({ _id: insertedId });
         if(!recovered) {
-            throw new Error('Falha ao salvar confirmação');
+            throw new InternalError('Falha ao salvar confirmação');
         }
         return recovered;
+    }
+
+    public async getCode(filter: Partial<Code>): Promise<Code | null> {
+        return this.codes.findOne(filter);
+    }
+
+    public async getGuest(filter: Partial<Guest>): Promise<Guest | null> {
+        return this.guests.findOne(filter);
     }
 }

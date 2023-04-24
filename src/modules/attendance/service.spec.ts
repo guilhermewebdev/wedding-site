@@ -1,26 +1,46 @@
-import { ConfirmAttendanceDTO } from "./DTOs/createGuest";
 import { AttendanceRepository } from "./adapters/repository";
-import { Guest } from "./entities";
+import { Code, Guest } from "./entities";
 import AttendanceServiceImpl, { AttendanceService } from "./service";
 import { v4 } from "uuid";
 
-class AttendantRepositoryMock implements AttendanceRepository {
-    async create(payload: ConfirmAttendanceDTO): Promise<Guest> {
-        return {
-            ...payload,
-            id: v4(),
-        };
-    }
-}
+const createGuest = jest.fn(async (payload) => ({
+    ...payload,
+    id: v4(),
+}))
+
+const getCode = jest.fn(async (filter) => ({
+    id: v4(),
+    code: v4(),
+    ...filter,
+}))
+
+const getGuest = jest.fn(async (filter) => ({
+    codeId: v4(),
+    name: 'Test Guest',
+    email: 'test@test.com',
+    id: v4(),
+    ...filter,
+}))
+
+const getGuest_returnNull = jest.fn(async () => null)
 
 describe('AttendantService', () => {
     let service: AttendanceService;
+    const repository: AttendanceRepository = {
+        createGuest,
+        getCode,
+        getGuest,
+    }
     beforeEach(() => {
-        service = new AttendanceServiceImpl(new AttendantRepositoryMock());
+        service = new AttendanceServiceImpl(repository);
     })
     it('.create', async () => {
+        service = new AttendanceServiceImpl({
+            ...repository,
+            getGuest: getGuest_returnNull,
+        })
         const created = await service.create({
-            codeId: v4(),
+            code: v4(),
             name: 'Test Guest',
             email: 'test@test.com',
         });
