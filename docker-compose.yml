@@ -18,10 +18,14 @@ services:
       DB_PASS: db_test
       DB_NAME: test
   db:
-    image: mongo
+    image: mongo:4.4.6
     restart: always
     platform: linux/amd64
+    volumes:
+      - db-data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: db_test
       MONGO_INITDB_DATABASE: test
+volumes:
+  db-data:

@@ -4,6 +4,8 @@ import styles from '../../styles/Styles.module.css'
 import React from "react";
 import { ConfirmAttendanceDTO, confirmAttendanceDTOimpl } from "../modules/attendance/DTOs/createGuest";
 import { buildUseForm } from "../hooks/useForm";
+import { apiClient } from "../lib/apiClient";
+import { AxiosError } from "axios";
 
 interface RSVPProps {
     code?: string;
@@ -13,9 +15,17 @@ const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
 export default function RSVP(props: RSVPProps) {
     const { code } = props;
-    const { errors, register, onSubmit } = useForm()
-    const submit = (form: ConfirmAttendanceDTO) => {
-
+    const { errors, register, onSubmit, loading, setError } = useForm()
+    const submit = async (form: ConfirmAttendanceDTO) => {
+        try {
+            await apiClient.post('/attendance', form);
+        } catch (error: any) {
+            if (error instanceof AxiosError) {
+                const message = error.response?.data?.message;
+                return setError('__other', message);
+            }
+            return setError('__other', 'Erro desconhecido');
+        }
     }
     return (
         <>
@@ -59,7 +69,8 @@ export default function RSVP(props: RSVPProps) {
                     )}
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
-                        <button type="submit">Confirmar</button>
+                        <p>{loading && "Carregando..."}</p>
+                        <button disabled={loading} type="submit">Confirmar</button>
                     </div>
                 </form>
             </main>
