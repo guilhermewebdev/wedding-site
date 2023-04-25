@@ -15,7 +15,7 @@ const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
 export default function RSVP(props: RSVPProps) {
     const { code } = props;
-    const { errors, register, onSubmit, loading, setError } = useForm()
+    const { errors, register, onSubmit, loading, setError, setValue } = useForm({ code })
     const submit = async (form: ConfirmAttendanceDTO) => {
         try {
             await apiClient.post('/attendance', form);
@@ -27,6 +27,11 @@ export default function RSVP(props: RSVPProps) {
             return setError('__other', 'Erro desconhecido');
         }
     }
+    React.useEffect(() => {
+        if(code) {
+            setValue('code', code);
+        }
+    }, [code])
     return (
         <>
             <Head>
@@ -60,13 +65,11 @@ export default function RSVP(props: RSVPProps) {
                         <input maxLength={11} {...register('phone')} />
                         <small>{errors['phone']}</small>
                     </div>
-                    {!code && (
-                        <div className={styles.field}>
-                            <label htmlFor="Código">Código</label>
-                            <input {...register('code')} />
-                            <small>{errors['code']}</small>
-                        </div>
-                    )}
+                    <div className={styles.field}>
+                        <label htmlFor="Código">Código</label>
+                        <input {...register('code')} disabled={!!code} />
+                        <small>{errors['code']}</small>
+                    </div>
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
                         <p>{loading && "Carregando..."}</p>

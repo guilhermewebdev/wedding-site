@@ -109,16 +109,16 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
         }
         return validateForm({ ...context, state: { ...state, form } })
     }
-    const useForm = () => {
+    const useForm = (init: Partial<T> = {}) => {
         const [loading, setLoading] = React.useState(false);
-        const [{ form, errors, isValidated: validated }, reduceForm] = React.useReducer(formReducer, {
-            form: {},
+        const [{ form = init, errors, isValidated: validated }, dispatch] = React.useReducer(formReducer, {
+            form: init,
             errors: {},
             isValidated: false,
         });
         const change = (key: keyof T): React.ChangeEventHandler<HTMLInputElement> => {
             return (event) => {
-                reduceForm({ key, value: event.target.value })
+                dispatch({ key, value: event.target.value })
             }
         }
         const register = (key: keyof T) => ({
@@ -127,13 +127,13 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
             id: key,
         })
         const setValue = (key: keyof T, value: string) => {
-            reduceForm({ key, value })
+            dispatch({ key, value })
         }
         const onSubmit = (submit: (form: T) => any) => {
             return async (event: React.FormEvent<HTMLFormElement>) => {
                 try {
                     setLoading(true)
-                    reduceForm({ command: Commands.VALIDATE })
+                    dispatch({ command: Commands.VALIDATE })
                     event.preventDefault()
                     event.stopPropagation()
                     if (Object.entries(errors).length == 0 && validated) {
@@ -147,7 +147,7 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
             }
         }
         const setError = (key: keyof T | '__other', message: string) => {
-            reduceForm({ command: Commands.SET_ERROR, data: { [key]: message } })
+            dispatch({ command: Commands.SET_ERROR, data: { [key]: message } })
         }
         return {
             form,
