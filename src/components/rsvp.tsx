@@ -11,7 +11,23 @@ interface RSVPProps {
     code?: string;
 }
 
+interface FieldProps extends React.HTMLProps<HTMLInputElement> {
+    id: string;
+    error?: string;
+}
+
 const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
+
+function Field(props: FieldProps) {
+    const { id, error, ...inputProps } = props;
+    return (
+        <div className={styles.field}>
+            <label htmlFor={id}>Nome</label>
+            <input {...inputProps} id={id} />
+            <small>{error}</small>
+        </div>
+    )
+}
 
 export default function RSVP(props: RSVPProps) {
     const { code } = props;
@@ -50,26 +66,10 @@ export default function RSVP(props: RSVPProps) {
                     )}
                 </div>
                 <form onSubmit={onSubmit(submit)} className={styles.form}>
-                    <div className={styles.field}>
-                        <label htmlFor="name">Nome</label>
-                        <input {...register('name')} />
-                        <small>{errors['name']}</small>
-                    </div>
-                    <div className={styles.field}>
-                        <label htmlFor="email">E-mail</label>
-                        <input {...register('email')} />
-                        <small>{errors['email']}</small>
-                    </div>
-                    <div className={styles.field}>
-                        <label htmlFor="phone">Telefone</label>
-                        <input maxLength={11} {...register('phone')} />
-                        <small>{errors['phone']}</small>
-                    </div>
-                    <div className={styles.field}>
-                        <label htmlFor="Código">Código</label>
-                        <input {...register('code')} disabled={!!code} />
-                        <small>{errors['code']}</small>
-                    </div>
+                    <Field {...register("name")} error={errors['name']} />
+                    <Field {...register("email")} error={errors['email']} />
+                    <Field {...register("phone")} error={errors['phone']} />
+                    <Field {...register("code")} disabled={!!code} error={errors['code']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
                         <p>{loading && "Carregando..."}</p>
@@ -77,7 +77,6 @@ export default function RSVP(props: RSVPProps) {
                     </div>
                 </form>
             </main>
-
         </>
     )
 }

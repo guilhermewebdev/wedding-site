@@ -125,6 +125,7 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
             onChange: change(key),
             value: form[key],
             id: key,
+            name: key,
         })
         const setValue = (key: keyof T, value: string) => {
             dispatch({ key, value })
@@ -136,7 +137,8 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
                     dispatch({ command: Commands.VALIDATE })
                     event.preventDefault()
                     event.stopPropagation()
-                    if (Object.entries(errors).length == 0 && validated) {
+                    const { __other, ...fieldsErrors } = errors;
+                    if (Object.entries(fieldsErrors).length == 0 && validated) {
                         await submit(form as T)
                     }
                 } catch (e) {
