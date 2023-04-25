@@ -1,6 +1,7 @@
 export interface Sessions {
     token: string;
     browser?: string;
+    dateTime: Date;
 }
 
 export interface Admin {
@@ -8,5 +9,5 @@ export interface Admin {
     name: string;
     email: string;
     password: string;
-    session: Sessions[];
+    sessions: Sessions[];
 }

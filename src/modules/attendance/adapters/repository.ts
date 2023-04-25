@@ -15,11 +15,11 @@ export default class AttendanceRepositoryImpl implements AttendanceRepository {
         this.db = db;
     }
 
-    get guests() {
+    private get guests() {
         return this.db.collection<Guest>('guests');
     }
 
-    get codes() {
+    private get codes() {
         return this.db.collection<Code>('codes');
     }
 
