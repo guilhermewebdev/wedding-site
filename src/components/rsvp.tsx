@@ -14,15 +14,16 @@ interface RSVPProps {
 interface FieldProps extends React.HTMLProps<HTMLInputElement> {
     id: string;
     error?: string;
+    label: string;
 }
 
 const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
 function Field(props: FieldProps) {
-    const { id, error, ...inputProps } = props;
+    const { id, label, error, ...inputProps } = props;
     return (
         <div className={styles.field}>
-            <label htmlFor={id}>Nome</label>
+            <label htmlFor={id}>{label}</label>
             <input {...inputProps} id={id} />
             <small>{error}</small>
         </div>
@@ -66,10 +67,10 @@ export default function RSVP(props: RSVPProps) {
                     )}
                 </div>
                 <form onSubmit={onSubmit(submit)} className={styles.form}>
-                    <Field {...register("name")} error={errors['name']} />
-                    <Field {...register("email")} error={errors['email']} />
-                    <Field {...register("phone")} error={errors['phone']} />
-                    <Field {...register("code")} disabled={!!code} error={errors['code']} />
+                    <Field label="Nome" {...register("name")} error={errors['name']} />
+                    <Field label="Email" {...register("email")} error={errors['email']} />
+                    <Field label="Telefone / WhatsApp" {...register("phone")} error={errors['phone']} />
+                    <Field label="Código" {...register("code")} disabled={!!code} error={errors['code']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
                         <p>{loading && "Carregando..."}</p>
