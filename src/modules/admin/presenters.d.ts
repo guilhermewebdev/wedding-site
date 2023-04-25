@@ -1,5 +1,5 @@
 import { Admin } from "./entities";
 
-export interface AdminPresenter extends Omit<Admin, 'password'>{
+export interface AdminPresenter extends Omit<Admin, 'password' | 'sessions'>{
 
 }
