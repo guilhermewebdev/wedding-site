@@ -13,7 +13,10 @@ const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
 export default function RSVP(props: RSVPProps) {
     const { code } = props;
-    const { errors, register } = useForm()
+    const { errors, register, onSubmit } = useForm()
+    const submit = (form: ConfirmAttendanceDTO) => {
+
+    }
     return (
         <>
             <Head>
@@ -31,31 +34,32 @@ export default function RSVP(props: RSVPProps) {
                         <h3 className={styles.fillData}>Preencha os dados e coloque o código em seu voucher. Código único por pessoa!</h3>
                     )}
                 </div>
-                <form className={styles.form}>
+                <form onSubmit={onSubmit(submit)} className={styles.form}>
                     <div className={styles.field}>
                         <label htmlFor="name">Nome</label>
                         <input {...register('name')} />
-                        <small>{ errors['name'] }</small>
+                        <small>{errors['name']}</small>
                     </div>
                     <div className={styles.field}>
                         <label htmlFor="email">E-mail</label>
                         <input {...register('email')} />
-                        <small>{ errors['email'] }</small>
+                        <small>{errors['email']}</small>
                     </div>
                     <div className={styles.field}>
                         <label htmlFor="phone">Telefone</label>
-                        <input {...register('phone')} />
-                        <small>{ errors['phone'] }</small>
+                        <input maxLength={11} {...register('phone')} />
+                        <small>{errors['phone']}</small>
                     </div>
                     {!code && (
                         <div className={styles.field}>
                             <label htmlFor="Código">Código</label>
                             <input {...register('code')} />
-                            <small>{ errors['code'] }</small>
+                            <small>{errors['code']}</small>
                         </div>
                     )}
                     <div className={styles.confirmationArea}>
-                        <button>Confirmar</button>
+                        <p>{errors['__other']}</p>
+                        <button type="submit">Confirmar</button>
                     </div>
                 </form>
             </main>

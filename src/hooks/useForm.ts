@@ -15,7 +15,8 @@ interface FormState<T extends {}> {
     form: Partial<T>;
     errors: FormErrors<T> & {
         __other?: string;
-    }
+    };
+    isValidated: boolean;
 }
 
 
@@ -31,34 +32,36 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
             const validated = validator.validateSync(form, {
                 abortEarly: false,
             });
-            console.log(validated, form)
             return {
-                form,
+                form: validated,
                 errors: {},
+                isValidated: true,
             }
         } catch (error: any) {
             if (error instanceof yup.ValidationError) {
-                console.log(form, error)
                 return {
                     form,
                     errors: error.inner.reduce((previous, current) => ({
                         ...previous,
                         [current.path || '__other']: current.message,
                     }), {}),
+                    isValidated: true,
                 }
             }
             return {
                 form,
                 errors: {
                     __other: 'Erro ao validar formulário'
-                }
+                },
+                isValidated: true,
             }
         }
     }
     const useForm = () => {
-        const [{ form, errors}, reduceForm] = React.useReducer(formReducer, {
+        const [{ form, errors, isValidated: validated }, reduceForm] = React.useReducer(formReducer, {
             form: {},
             errors: {},
+            isValidated: false,
         });
         const change = (key: keyof T): React.ChangeEventHandler<HTMLInputElement> => {
             return (event) => {
@@ -73,11 +76,21 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
         const setValue = (key: keyof T, value: string) => {
             reduceForm({ key, value })
         }
+        const onSubmit = (submit: (form: T) => any) => {
+            return (event: React.FormEvent<HTMLFormElement>) => {
+                event.preventDefault()
+                event.stopPropagation()
+                if (Object.entries(errors).length == 0 && validated) {
+                    return submit(form as T)
+                }
+            }
+        }
         return {
             form,
             errors,
             register,
             setValue,
+            onSubmit,
         }
     }
     return useForm;
