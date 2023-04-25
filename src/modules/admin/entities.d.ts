@@ -1,4 +1,4 @@
-export interface Sessions {
+export interface Session {
     token: string;
     browser?: string;
     dateTime: Date;
@@ -9,5 +9,5 @@ export interface Admin {
     name: string;
     email: string;
     password: string;
-    sessions: Sessions[];
+    sessions: Session[];
 }
