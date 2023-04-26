@@ -1,9 +1,7 @@
 import { createDBConnection } from "../lib/db";
-import { AttendanceModuleImpl } from "./attendance";
+import { AttendanceModule, AttendanceModuleImpl } from "./attendance";
 
-export function app() {
+export function attendance(): AttendanceModule {
     const db = createDBConnection();
-    return {
-        attendance: new AttendanceModuleImpl(db),
-    }
+    return new AttendanceModuleImpl(db);
 }

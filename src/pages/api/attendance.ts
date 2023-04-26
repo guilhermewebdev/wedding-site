@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { CreatedGuestPresenter } from '../../modules/attendance/presenters';
-import { app } from '../../modules/application';
+import { attendance } from '../../modules/application';
 import { processError } from '../../lib/exceptions';
 
-const { attendance: { controller } } = app();
+const { controller } = attendance();
 
 export default async function handler(
   req: NextApiRequest,
