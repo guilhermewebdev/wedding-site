@@ -45,9 +45,7 @@ export default function RSVP(props: RSVPProps) {
         }
     }
     React.useEffect(() => {
-        if(code) {
-            setValue('code', code);
-        }
+        if(code) setValue('code', code);
     }, [code])
     return (
         <>
@@ -69,7 +67,7 @@ export default function RSVP(props: RSVPProps) {
                 <form onSubmit={onSubmit(submit)} className={styles.form}>
                     <Field label="Nome" {...register("name")} error={errors['name']} />
                     <Field label="Email" {...register("email")} error={errors['email']} />
-                    <Field label="Telefone / WhatsApp" {...register("phone")} error={errors['phone']} />
+                    <Field maxLength={11} label="Telefone / WhatsApp" {...register("phone")} error={errors['phone']} />
                     <Field label="Código" {...register("code")} disabled={!!code} error={errors['code']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
