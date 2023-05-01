@@ -54,9 +54,7 @@ export default function RSVP(props: RSVPProps) {
             </Head>
             <main className={`${styles.main} ${styles.centralize}`}>
                 <div className={styles.confirmationNavigation}>
-                    <Link href="/">
-                        Início
-                    </Link>
+                    <a href="/">Início</a>
                 </div>
                 <div className={`${styles.centralize} ${styles.padding4}`}>
                     <h1 className={styles.title}>Confirme Sua Presença</h1>
