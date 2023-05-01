@@ -15,8 +15,8 @@ export class AdminModuleImpl implements AdminModule {
 
     constructor(db: Db) {
         const hash = new PasswordHashImpl();
-        this.repository = new AdminRepositoryImpl(db)
-        this.service = new AdminServiceImpl(this.repository, hash)
+        this.repository = new AdminRepositoryImpl(db);
+        this.service = new AdminServiceImpl(this.repository, hash);
         this.controller = new AdminControllerImpl(this.service);
     }
 }
