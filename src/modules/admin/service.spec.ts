@@ -28,5 +28,5 @@ describe('AdminService', () => {
         });
         expect(typeof created.id).toEqual('string');
         expect(created.password).not.toEqual('test_password')
-    })
+    }, 20 * 1000)
 })

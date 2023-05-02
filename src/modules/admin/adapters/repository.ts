@@ -24,7 +24,8 @@ export class AdminRepositoryImpl implements AdminRepository {
         if (!recovered) {
             throw new InternalError('Falha ao criar administrador');
         }
-        return recovered;
+        const { _id, ...adminData } = recovered;
+        return adminData;
     }
 
     public async getAdmin(filter: Partial<Admin>): Promise<Admin | null> {

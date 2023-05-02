@@ -36,13 +36,14 @@ export class AdminServiceImpl implements AdminService {
     }
 
     public async createAdmin(payload: CreateAdminPayload): Promise<Admin> {
-        const emailExists = await this.repository.getAdmin({ email: payload.email });
+        const { email, password } = payload;
+        const emailExists = await this.repository.getAdmin({ email });
         if (emailExists) {
             throw new UserError('Email já está em uso');
         }
         const admin: Admin = {
             ...payload,
-            password: await this.encryptPassword(payload.password),
+            password: await this.encryptPassword(password),
             sessions: [],
             id: await this.genAdminId(),
         }
