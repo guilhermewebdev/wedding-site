@@ -1,34 +1,17 @@
 import Head from "next/head";
-import Link from "next/link";
 import styles from '../../styles/Styles.module.css'
 import React from "react";
 import { ConfirmAttendanceDTO, confirmAttendanceDTOimpl } from "../modules/attendance/DTOs/createGuest";
 import { buildUseForm } from "../hooks/useForm";
 import { apiClient } from "../lib/apiClient";
 import { AxiosError } from "axios";
+import { Field } from "./Field";
 
 interface RSVPProps {
     code?: string;
 }
 
-interface FieldProps extends React.HTMLProps<HTMLInputElement> {
-    id: string;
-    error?: string;
-    label: string;
-}
-
 const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
-
-function Field(props: FieldProps) {
-    const { id, label, error, ...inputProps } = props;
-    return (
-        <div className={styles.field}>
-            <label htmlFor={id}>{label}</label>
-            <input {...inputProps} id={id} />
-            <small>{error}</small>
-        </div>
-    )
-}
 
 export default function RSVP(props: RSVPProps) {
     const { code } = props;

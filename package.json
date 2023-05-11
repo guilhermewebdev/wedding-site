@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "create:admin": "tsx src/cli/admin/create.ts"
   },
   "dependencies": {
     "@next/font": "13.1.1",
@@ -36,6 +37,7 @@
     "@types/yup": "^0.32.0",
     "jest": "^29.5.0",
     "ts-jest": "^29.1.0",
+    "tsx": "^3.12.7",
     "ts-node": "^10.9.1"
   }
 }

@@ -15,7 +15,8 @@ export class AdminControllerImpl implements AdminController {
 
     public async createAdmin(payload: CreateAdminDTO): Promise<AdminPresenter> {
         const validated = await createAdminDTO.validate(payload);
-        const { password, sessions, ...created } = await this.service.createAdmin(validated);
+        const clean = createAdminDTO.cast(validated, { stripUnknown: true });
+        const { password, sessions, ...created } = await this.service.createAdmin(clean);
         return created;
     }
 }
