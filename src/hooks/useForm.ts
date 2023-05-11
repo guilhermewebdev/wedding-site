@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import React from 'react';
 import * as yup from 'yup';
 
@@ -141,8 +142,12 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
                     if (Object.entries(fieldsErrors).length == 0 && validated) {
                         await submit(form as T)
                     }
-                } catch (e) {
-                    throw e
+                } catch (error) {
+                    if (error instanceof AxiosError) {
+                        const message = error.response?.data?.message;
+                        return setError('__other', message);
+                    }
+                    return setError('__other', 'Erro desconhecido');
                 } finally {
                     setLoading(false)
                 }

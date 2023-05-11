@@ -17,15 +17,7 @@ export default function RSVP(props: RSVPProps) {
     const { code } = props;
     const { errors, register, onSubmit, loading, setError, setValue } = useForm({ code })
     const submit = async (form: ConfirmAttendanceDTO) => {
-        try {
-            await apiClient.post('/attendance', form);
-        } catch (error: any) {
-            if (error instanceof AxiosError) {
-                const message = error.response?.data?.message;
-                return setError('__other', message);
-            }
-            return setError('__other', 'Erro desconhecido');
-        }
+        await apiClient.post('/attendance', form);
     }
     React.useEffect(() => {
         if(code) setValue('code', code);

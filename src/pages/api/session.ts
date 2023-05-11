@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { SessionPresenter } from '../../modules/admin/presenters';
 import { admin } from '../../modules/application';
 import { processError } from '../../lib/exceptions';
-import { cookies } from 'next/headers';
 
 const { controller } = admin();
 const {
@@ -15,8 +14,11 @@ export default async function handler(
   res: NextApiResponse<SessionPresenter | { message: string }>
 ) {
     try {
-        const response = await controller.createSession(req.body);
-        cookies().set(AUTH_COOKIE_NAME, response.token);
+        const response = await controller.createSession({
+            ...req.body,
+            browser: req.headers['user-agent'],
+        });
+        res.setHeader("set-cookie", `${AUTH_COOKIE_NAME}=${response.token}; path=/admin;`)
         res.status(201).json(response);
   } catch (error: any) {
         const { httpStatus, message } = await processError(error);
