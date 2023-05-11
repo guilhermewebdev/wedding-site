@@ -12,6 +12,10 @@ const mockDB = ({
             id: v4(),
             ...filter,
         })),
+        updateOne: jest.fn((filter, data) => ({
+            ...filter,
+            ...data,
+        }))
     })),
 } as unknown) as Db;
 
@@ -34,5 +38,12 @@ describe('AdminRepository', () => {
         const id = v4();
         const admin = await repository.getAdmin({ id });
         expect(admin?.id).toEqual(id);
+    });
+    it('.createSession', async () => {
+        const created = await repository.createSession('test@test.com', {
+            dateTime: new Date(),
+            token: v4(),
+        });
+        expect(typeof created.token).toEqual('string');
     })
 })

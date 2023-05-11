@@ -5,7 +5,6 @@ import { argon2id } from "argon2";
 export class PasswordHashImpl implements PasswordHash {
     private readonly settings = {
         saltLength: 16,
-        memoryCost: 1048576,
         parallelism: 8,
         type: argon2id,
     }

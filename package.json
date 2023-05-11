@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "create:admin": "tsx src/cli/admin/create.ts"
   },
   "dependencies": {
