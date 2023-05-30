@@ -4,7 +4,6 @@ import React from "react";
 import { ConfirmAttendanceDTO, confirmAttendanceDTOimpl } from "../modules/attendance/DTOs/createGuest";
 import { buildUseForm } from "../hooks/useForm";
 import { apiClient } from "../lib/apiClient";
-import { AxiosError } from "axios";
 import { Field } from "./Field";
 
 interface RSVPProps {
@@ -15,7 +14,7 @@ const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
 export default function RSVP(props: RSVPProps) {
     const { code } = props;
-    const { errors, register, onSubmit, loading, setError, setValue } = useForm({ code })
+    const { errors, register, onSubmit, loading, setValue } = useForm({ code });
     const submit = async (form: ConfirmAttendanceDTO) => {
         await apiClient.post('/attendance', form);
     }

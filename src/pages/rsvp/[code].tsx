@@ -1,4 +1,4 @@
-import RSVP from "../../components/rsvp";
+import RSVP from "../../components/RSVP";
 import { useRouter } from 'next/router'
 
 export default function RSVPIndex () {

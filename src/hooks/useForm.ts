@@ -143,11 +143,12 @@ export function buildUseForm<T extends {}>(validator: yup.ObjectSchema<T>) {
                         await submit(form as T)
                     }
                 } catch (error) {
+                    const defaultMsg =  'Erro desconhecido';
                     if (error instanceof AxiosError) {
-                        const message = error.response?.data?.message;
+                        const message = error.response?.data?.message || defaultMsg;
                         return setError('__other', message);
                     }
-                    return setError('__other', 'Erro desconhecido');
+                    return setError('__other', defaultMsg);
                 } finally {
                     setLoading(false)
                 }

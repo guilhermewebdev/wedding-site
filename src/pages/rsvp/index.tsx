@@ -1,4 +1,4 @@
-import RSVP from "../../components/rsvp";
+import RSVP from "../../components/RSVP";
 
 export default function RSVPIndex () {
     return (
