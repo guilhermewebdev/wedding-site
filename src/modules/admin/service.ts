@@ -81,9 +81,7 @@ export class AdminServiceImpl implements AdminService {
     }
 
     public async getAdminBySession(token: string): Promise<Admin> {
-        const admin = await this.repository.getAdmin({
-            sessions: { token }
-        });
+        const admin = await this.repository.getAdminBySession(token);
         if(!admin) throw new UnauthorizedError('Não autorizado');
         return admin;
     }

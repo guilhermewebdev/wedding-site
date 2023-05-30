@@ -1,4 +1,5 @@
 import React from "react";
+import { apiClient } from "../lib/apiClient";
 
 export interface AuthContext {
     isAuthenticated: boolean;
@@ -6,7 +7,7 @@ export interface AuthContext {
 }
 
 export interface AuthProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 const AuthContextImpl = React.createContext<AuthContext>({
@@ -18,8 +19,16 @@ export function Auth(props: AuthProps) {
     const { children } = props;
     const [state, setState] = React.useState<AuthContext>({
         isAuthenticated: false,
-        loading: false,
-    })
+        loading: true,
+    });
+    React.useEffect(() => {
+        apiClient.get('/admin/me').then(async (response) => {
+            const { status } = response;
+            const newState = { loading: false, isAuthenticated: status === 200 };
+            setState(newState);
+        })
+        .catch(() => setState({ ...state, loading: false, }))
+    }, []);
     return (
         <AuthContextImpl.Provider value={state}>
             {children}
@@ -28,5 +37,5 @@ export function Auth(props: AuthProps) {
 }
 
 export default function useAuth() {
-
+    return React.useContext(AuthContextImpl);
 }

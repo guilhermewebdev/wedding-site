@@ -29,6 +29,7 @@ describe('AdminService', () => {
         createAdmin,
         getAdmin,
         createSession,
+        getAdminBySession: getAdmin
     }
     beforeEach(() => {
         service = new AdminServiceImpl(repository, hash);
@@ -60,7 +61,7 @@ describe('AdminService', () => {
         });
         it('with error', async () => {
             service = new AdminServiceImpl({
-                ...repository, getAdmin: getAdminAndReturnNull 
+                ...repository, getAdminBySession: getAdminAndReturnNull 
            }, hash);
            await expect(service.getAdminBySession('')).rejects.toEqual(new UnauthorizedError('Não autorizado'))
         })

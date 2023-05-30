@@ -45,5 +45,10 @@ describe('AdminRepository', () => {
             token: v4(),
         });
         expect(typeof created.token).toEqual('string');
+    });
+    it('.getAdminBySession', async () => {
+        const user = await repository.getAdminBySession('t0k3n');
+        expect(user).not.toBeNull();
+        expect(user).toBeDefined();
     })
 })
