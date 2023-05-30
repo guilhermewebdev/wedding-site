@@ -8,7 +8,7 @@ import { AdminService } from "../service";
 export interface AdminController {
     createAdmin(payload: CreateAdminDTO): Promise<AdminPresenter>;
     createSession(payload: CreateSessionDTO): Promise<SessionPresenter>;
-    getAdminBySession(token: string): Promise<AdminPresenter>;
+    getAdminBySession(token?: string): Promise<AdminPresenter>;
 }
 
 export class AdminControllerImpl implements AdminController {
@@ -32,7 +32,7 @@ export class AdminControllerImpl implements AdminController {
         return session;
     }
 
-    public async getAdminBySession(token: string): Promise<AdminPresenter> {
+    public async getAdminBySession(token?: string): Promise<AdminPresenter> {
         const validated = await getAdminBySessionDTO.validate(token);
         const clean = getAdminBySessionDTO.cast(validated);
         if(!clean) throw new UnauthorizedError('Token inválido');
