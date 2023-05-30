@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 import { AdminRepository } from "./adapters/repository";
 import { Admin, Session } from "./entities";
-import { UserError } from "../../lib/exceptions";
+import { UnauthorizedError, UserError } from "../../lib/exceptions";
 
 export interface CreateAdminPayload extends Omit<Admin, 'id' | 'sessions'> {}
 
@@ -19,6 +19,7 @@ export interface PasswordHash {
 export interface AdminService {
     createAdmin(payload: CreateAdminPayload): Promise<Admin>;
     createSession(payload: CreateSessionPayload): Promise<Session>;
+    getAdminBySession(token: string): Promise<Admin>;
 }
 
 export class AdminServiceImpl implements AdminService {
@@ -77,5 +78,13 @@ export class AdminServiceImpl implements AdminService {
             browser,
         }
         return this.repository.createSession(email, session);
+    }
+
+    public async getAdminBySession(token: string): Promise<Admin> {
+        const admin = await this.repository.getAdmin({
+            sessions: { token }
+        });
+        if(!admin) throw new UnauthorizedError('Não autorizado');
+        return admin;
     }
 }

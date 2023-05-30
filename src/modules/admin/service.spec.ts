@@ -2,6 +2,7 @@ import { v4 } from "uuid";
 import { AdminRepository } from "./adapters/repository";
 import { AdminService, AdminServiceImpl } from "./service"
 import { PasswordHashImpl } from "../../lib/hash";
+import { UnauthorizedError } from "../../lib/exceptions";
 
 const hash = new PasswordHashImpl();
 
@@ -51,5 +52,17 @@ describe('AdminService', () => {
             browser: 'test',
         });
         expect(typeof created.token).toEqual('string');
-    }, 20 * 1000)
+    }, 20 * 1000);
+    describe('.getAdminBySession', () => {
+        it('with success', async () => {
+            const admin = await service.getAdminBySession('');
+            expect(admin).not.toBeNull();
+        });
+        it('with error', async () => {
+            service = new AdminServiceImpl({
+                ...repository, getAdmin: getAdminAndReturnNull 
+           }, hash);
+           await expect(service.getAdminBySession('')).rejects.toEqual(new UnauthorizedError('Não autorizado'))
+        })
+    });
 })
