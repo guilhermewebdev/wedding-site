@@ -20,9 +20,18 @@ const getGuest = jest.fn(async (filter) => ({
     email: 'test@test.com',
     id: v4(),
     ...filter,
+}));
+
+const bulkCreateCodes = jest.fn(async (codes) => codes)
+
+const returnNull = jest.fn(async (): Promise<null> => new Promise((accept) => {
+    setTimeout(() => accept(null), 50);
 }))
 
-const getGuest_returnNull = jest.fn(async () => null)
+const getAllCodes = jest.fn(async () => Array.from({ length: 30 }).fill(null).map(() => ({
+    code: v4(),
+    id: v4(),
+})))
 
 describe('AttendantService', () => {
     let service: AttendanceService;
@@ -30,6 +39,8 @@ describe('AttendantService', () => {
         createGuest,
         getCode,
         getGuest,
+        bulkCreateCodes,
+        getAllCodes,
     }
     beforeEach(() => {
         service = new AttendanceServiceImpl(repository);
@@ -37,7 +48,7 @@ describe('AttendantService', () => {
     it('.create', async () => {
         service = new AttendanceServiceImpl({
             ...repository,
-            getGuest: getGuest_returnNull,
+            getGuest: returnNull,
         })
         const created = await service.create({
             code: v4(),
@@ -46,5 +57,13 @@ describe('AttendantService', () => {
         });
         expect(typeof created.id).toEqual('string');
         expect(created.email).toEqual('test@test.com');
+    });
+    it('.generateCodes', async () => {
+        service = new AttendanceServiceImpl({
+            ...repository,
+            getCode: returnNull,
+        })
+        const codes = await service.generateCodes(100);
+        expect(codes.length).toEqual(100);
     })
 });

@@ -9,10 +9,13 @@ const create = jest.fn(async ({ code, ...payload }) => ({
     codeId: v4(),
 }))
 
+const generateCodes = jest.fn(async () => [])
+
 describe('AttendanceController', () => {
     let controller: AttendanceController;
     const service: AttendanceService = {
         create,
+        generateCodes,
     }
     beforeEach(() => {
         controller = new AttendanceControllerImpl(service);
