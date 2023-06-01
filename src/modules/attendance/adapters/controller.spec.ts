@@ -9,7 +9,10 @@ const create = jest.fn(async ({ code, ...payload }) => ({
     codeId: v4(),
 }))
 
-const generateCodes = jest.fn(async () => [])
+const generateCodes = jest.fn(async (amount) => Array.from({ length: amount })
+    .fill(null)
+    .map(() => ({ code: v4(), id: v4() }))
+)
 
 describe('AttendanceController', () => {
     let controller: AttendanceController;
@@ -28,5 +31,9 @@ describe('AttendanceController', () => {
         })
         expect(typeof created.id).toEqual('string');
         expect(create).toBeCalled()
+    });
+    it('.generateCodes', async () => {
+        const codes = await controller.generateCodes({ amount: 100 });
+        expect(codes.length).toEqual(100);
     })
 });
