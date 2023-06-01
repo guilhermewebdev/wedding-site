@@ -21,7 +21,7 @@ export default async function handler(
     try {
         await checkAuth(req);
         switch(req.method) {
-            case 'post': await generateCodes(req, res);
+            case 'POST': await generateCodes(req, res);
             default: throw new MethodNotAllowedError('Método não permitido');
         }
     } catch (error) {
