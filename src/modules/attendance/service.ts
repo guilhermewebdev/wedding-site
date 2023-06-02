@@ -10,6 +10,7 @@ export interface AttendanceConfirmationPayload extends Omit<Guest, 'id' | 'codeI
 export interface AttendanceService {
     create(payload: AttendanceConfirmationPayload): Promise<Guest>;
     generateCodes(amount: number): Promise<Code[]>;
+    listCodes(): Promise<Code[]>;
 }
 
 export default class AttendanceServiceImpl implements AttendanceService {
@@ -64,5 +65,9 @@ export default class AttendanceServiceImpl implements AttendanceService {
         }));
         const codes = await Promise.all(codesPromise);
         return this.repository.bulkCreateCodes(codes);
+    }
+
+    public async listCodes() {
+        return this.repository.getAllCodes()
     }
 }

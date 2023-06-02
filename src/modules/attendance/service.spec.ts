@@ -65,5 +65,9 @@ describe('AttendantService', () => {
         })
         const codes = await service.generateCodes(100);
         expect(codes.length).toEqual(100);
-    })
+    });
+    it('.getAllCodes', async () => {
+        const codes = await service.listCodes();
+        expect(codes.length).toEqual(30);
+    });
 });

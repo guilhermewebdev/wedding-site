@@ -6,6 +6,7 @@ import { AttendanceService } from "../service";
 export interface AttendanceController {
     create(payload: ConfirmAttendanceDTO): Promise<CreatedGuestPresenter>;
     generateCodes(payload: GenerateCodesDTO): Promise<CodePresenter[]>;
+    listCodes(): Promise<CodePresenter[]>;
 }
 
 export default class AttendanceControllerImpl implements AttendanceController {
@@ -25,5 +26,10 @@ export default class AttendanceControllerImpl implements AttendanceController {
         const { amount } = await generateCodesDTO.validate(payload);
         const generated = await this.service.generateCodes(amount);
         return generated;
+    }
+
+    public async listCodes() {
+        const codes = await this.service.listCodes();
+        return codes;
     }
 }
