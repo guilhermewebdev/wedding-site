@@ -1,5 +1,5 @@
 import AdminBar from "../../components/AdminBar";
-import { Auth } from "../../hooks/useAuth";
+import { Auth, IsAuthenticated } from "../../hooks/useAuth";
 import { buildUseForm } from "../../hooks/useForm";
 import { apiClient } from "../../lib/apiClient";
 import { GenerateCodesDTO, generateCodesDTO } from "../../modules/attendance/DTOs/generateCodes";
@@ -13,7 +13,7 @@ const submit = async (form: GenerateCodesDTO) => {
 export default function Tokens() {
     const { register, onSubmit } = useForm();
     return (
-        <Auth>
+        <IsAuthenticated>
             <AdminBar />
             <main>
                 <h1>Tokens</h1>
@@ -24,6 +24,6 @@ export default function Tokens() {
                     </form>
                 </p>
             </main>
-        </Auth>
+        </IsAuthenticated>
     )
 }

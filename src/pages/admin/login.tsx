@@ -4,14 +4,17 @@ import { CreateSessionDTO, createSessionDTO } from "../../modules/admin/DTOs/cre
 import styles from '../../../styles/Styles.module.css'
 import { apiClient } from "../../lib/apiClient";
 import { useRouter } from "next/router";
+import useAuth from "../../hooks/useAuth";
 
 const useForm = buildUseForm<CreateSessionDTO>(createSessionDTO);
 
 export default function AddAdmin() {
     const { register, errors, loading, onSubmit } = useForm();
+    const { checkAuth } = useAuth();
     const router = useRouter();
     const submit = async (form: CreateSessionDTO) => {
         await apiClient.post('/session', form);
+        checkAuth()
         await router.push('/admin/')
     }
     return (
