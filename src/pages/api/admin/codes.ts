@@ -14,6 +14,14 @@ async function generateCodes(
     res.status(201).json(created)
 }
 
+async function listCodes(
+    _req: NextApiRequest,
+    res: NextApiResponse<CodePresenter[] | { message: string }>
+) {
+    const codes = await controller.listCodes();
+    res.status(200).json(codes);
+}
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<CodePresenter[] | { message: string }>
@@ -22,6 +30,7 @@ export default async function handler(
         await checkAuth(req);
         switch(req.method) {
             case 'POST': await generateCodes(req, res);
+            case 'GET': await listCodes(req, res);
             default: throw new MethodNotAllowedError('Método não permitido');
         }
     } catch (error) {
