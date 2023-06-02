@@ -28,12 +28,12 @@ export default function Tokens() {
             <AdminBar />
             <main>
                 <h1>Tokens</h1>
-                <p>
-                    <form onSubmit={onSubmit(submit)}>
+                <form onSubmit={onSubmit(submit)}>
+                    <p>
                         <input {...register('amount')} type="number" />
                         <button>Gerar Tokens</button>
-                    </form>
-                </p>
+                    </p>
+                </form>
                 <ul>
                     {codes.map(code => (
                         <li key={code.code}>{code.code}</li>

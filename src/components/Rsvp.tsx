@@ -12,7 +12,7 @@ interface RSVPProps {
 
 const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
-export default function RSVP(props: RSVPProps) {
+export function RSVP(props: RSVPProps) {
     const { code } = props;
     const { errors, register, onSubmit, loading, setValue } = useForm({ code });
     const submit = React.useCallback(async (form: ConfirmAttendanceDTO) => {

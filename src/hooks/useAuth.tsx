@@ -32,9 +32,7 @@ export function Auth(props: AuthProps) {
         })
         .catch(() => setState({ ...state, loading: false, }))
     }, [state, setState])
-    React.useEffect(() => {
-        checkAuth()
-    }, [checkAuth]);
+    React.useEffect(checkAuth, []);
     return (
         <AuthContextImpl.Provider value={{ ...state, checkAuth, }}>
             {children}
