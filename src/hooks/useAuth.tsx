@@ -31,11 +31,10 @@ export function Auth(props: AuthProps) {
             setState(newState);
         })
         .catch(() => setState({ ...state, loading: false, }))
-    }, [])
-    
+    }, [state, setState])
     React.useEffect(() => {
         checkAuth()
-    }, []);
+    }, [checkAuth]);
     return (
         <AuthContextImpl.Provider value={{ ...state, checkAuth, }}>
             {children}
@@ -51,7 +50,7 @@ export function IsAuthenticated(props: AuthProps) {
         if(!loading && !isAuthenticated) {
             push('/admin/login')
         }
-    }, [isAuthenticated, loading])
+    }, [isAuthenticated, loading, push])
     if (loading) return (
         <main>Carregando...</main>
     )

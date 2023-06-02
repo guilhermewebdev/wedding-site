@@ -15,12 +15,12 @@ const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 export default function RSVP(props: RSVPProps) {
     const { code } = props;
     const { errors, register, onSubmit, loading, setValue } = useForm({ code });
-    const submit = async (form: ConfirmAttendanceDTO) => {
+    const submit = React.useCallback(async (form: ConfirmAttendanceDTO) => {
         await apiClient.post('/attendance', form);
-    }
+    }, []);
     React.useEffect(() => {
         if(code) setValue('code', code);
-    }, [code])
+    }, [code, setValue])
     return (
         <>
             <Head>

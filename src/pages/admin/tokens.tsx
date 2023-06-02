@@ -36,7 +36,7 @@ export default function Tokens() {
                 </p>
                 <ul>
                     {codes.map(code => (
-                        <li>{code.code}</li>
+                        <li key={code.code}>{code.code}</li>
                     ))}
                 </ul>
             </main>
