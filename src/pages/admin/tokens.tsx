@@ -42,11 +42,15 @@ export default function Tokens() {
                 </form>
                 <ul>
                     {codes.map(({ code }) => {
-                        const link = `${NEXT_PUBLIC_BASE_RSVP_URL}/${code}`
+                        const link = `${NEXT_PUBLIC_BASE_RSVP_URL}/${code}`;
+                        const qrCode = `/api/admin/qr/${code}`;
                         return (
                             <li key={code}>
-                                <p>{code}</p>
-                                <p>{link}</p>
+                                <p>Código: {code}</p>
+                                <p>Link: {link}</p>
+                                <p>
+                                    <img src={qrCode} alt={link} />
+                                </p>
                             </li>
                         )
                     })}

@@ -52,8 +52,6 @@ export class MethodRouterImpl implements MethodRouter {
           } catch (error: any) {
             const { httpStatus, message } = await processError(error);
             res.status(httpStatus).json({ message });
-          } finally {
-            res.end()
           }
     }
     
