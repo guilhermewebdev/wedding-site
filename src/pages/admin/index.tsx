@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { Auth, IsAuthenticated } from "../../hooks/useAuth";
+import { Auth, Private } from "../../hooks/useAuth";
 import AdminBar from "../../components/AdminBar";
 
 export default function Admin() {
     return (
-        <IsAuthenticated>
+        <Private>
             <AdminBar />
             <main>
                 <Link href="/admin/tokens">Tokens</Link>
             </main>
-        </IsAuthenticated>
+        </Private>
     )
 }

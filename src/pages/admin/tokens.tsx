@@ -1,10 +1,16 @@
 import React from "react";
 import AdminBar from "../../components/AdminBar";
-import { Auth, IsAuthenticated } from "../../hooks/useAuth";
+import { Auth, Private } from "../../hooks/useAuth";
 import { buildUseForm } from "../../hooks/useForm";
 import { apiClient } from "../../lib/apiClient";
 import { GenerateCodesDTO, generateCodesDTO } from "../../modules/attendance/DTOs/generateCodes";
 import { Code } from "../../modules/attendance/entities";
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+const {
+    NEXT_PUBLIC_BASE_RSVP_URL = '',
+} = publicRuntimeConfig;
 
 const useForm = buildUseForm<GenerateCodesDTO>(generateCodesDTO);
 
@@ -22,9 +28,9 @@ export default function Tokens() {
     }, [fetchCodes])
     React.useEffect(() => {
         fetchCodes();
-    }, [fetchCodes])
+    }, [])
     return (
-        <IsAuthenticated>
+        <Private>
             <AdminBar />
             <main>
                 <h1>Tokens</h1>
@@ -35,11 +41,17 @@ export default function Tokens() {
                     </p>
                 </form>
                 <ul>
-                    {codes.map(code => (
-                        <li key={code.code}>{code.code}</li>
-                    ))}
+                    {codes.map(({ code }) => {
+                        const link = `${NEXT_PUBLIC_BASE_RSVP_URL}/${code}`
+                        return (
+                            <li key={code}>
+                                <p>{code}</p>
+                                <p>{link}</p>
+                            </li>
+                        )
+                    })}
                 </ul>
             </main>
-        </IsAuthenticated>
+        </Private>
     )
 }

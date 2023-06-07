@@ -34,13 +34,15 @@ export function Auth(props: AuthProps) {
     }, [state, setState])
     React.useEffect(checkAuth, []);
     return (
-        <AuthContextImpl.Provider value={{ ...state, checkAuth, }}>
-            {children}
-        </AuthContextImpl.Provider>
+        <React.Profiler id="Auth" onRender={console.debug}>
+            <AuthContextImpl.Provider value={{ ...state, checkAuth, }}>
+                {children}
+            </AuthContextImpl.Provider>
+        </React.Profiler>
     )
 }
 
-export function IsAuthenticated(props: AuthProps) {
+export function Private(props: AuthProps) {
     const { isAuthenticated, loading } = useAuth();
     const { children } = props;
     const { push } = useRouter();
@@ -50,10 +52,14 @@ export function IsAuthenticated(props: AuthProps) {
         }
     }, [isAuthenticated, loading, push])
     if (loading) return (
-        <main>Carregando...</main>
+        <React.Profiler id="Private_Loading" onRender={console.debug}>
+            <main>Carregando...</main>
+        </React.Profiler>
     )
     return (
-        <>{children}</>
+        <React.Profiler id="Private_Permitted" onRender={console.debug}>
+            {children}
+        </React.Profiler>
     );
 }
 
