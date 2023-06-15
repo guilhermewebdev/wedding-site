@@ -119,7 +119,7 @@
     flex-wrap: wrap;
     display: flex;
     justify-content: center;
-    row-gap: 100px;
+    row-gap: 30px;
     flex-direction: row;
     width: 80%;
 }

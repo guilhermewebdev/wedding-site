@@ -44,8 +44,10 @@ export function RSVP(props: RSVPProps) {
                     <Field label="Código" {...register("code")} disabled={!!code} error={errors['code']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
-                        <p>{loading && <Spinner />}</p>
-                        <button disabled={loading} type="submit">Confirmar</button>
+                        {loading 
+                            ? <p><Spinner style={{ fontSize: 20 }} /></p>
+                            : <button disabled={loading} type="submit">Confirmar</button>
+                        }
                     </div>
                 </form>
             </main>
