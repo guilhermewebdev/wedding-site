@@ -119,7 +119,7 @@
     flex-wrap: wrap;
     display: flex;
     justify-content: center;
-    row-gap: 100px;
+    row-gap: 30px;
     flex-direction: row;
     width: 80%;
 }
@@ -175,4 +175,67 @@
 .confirmationArea button:hover {
     color: gold;
     cursor: pointer;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes spinnerIndicatorSize {
+    0% {
+        border: 1.5em solid transparent;
+        bottom: calc(50% -  1.5em);    
+        border-right: 1.5em solid white;
+    }
+
+    50% {
+        border: 0.1em solid transparent;
+        bottom: calc(50% -  0.1em);
+        border-right: 1.5em solid white;
+    }
+
+    100% {
+        border: 1.5em solid transparent;
+        bottom: calc(50% -  1.5em);
+        border-right: 1.5em solid white;
+    }
+}
+
+.spinner {
+    font-size: 50px;
+    border: 0.2em solid black;
+    height: 3em;
+    width: 3em;
+    border-radius: 2em;
+    position: relative;
+    animation-name: spinner;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    margin: 1em;
+    flex: 1 1 auto;
+}
+
+.spinner::before {
+    background-color: white;
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    right: -0.2em;
+    background-color: transparent;
+    border-left: none;
+    border: 1.5em solid transparent;
+    bottom: calc(50% -  1.5em);    
+    border-right: 1.5em solid red;
+    animation-name: spinnerIndicatorSize;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }

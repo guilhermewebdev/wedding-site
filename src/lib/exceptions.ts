@@ -16,6 +16,10 @@ export class InternalError extends BaseError {
     readonly httpStatus = 500;
 }
 
+export class MethodNotAllowedError extends BaseError {
+    readonly httpStatus = 405;
+}
+
 interface ParsedError {
     httpStatus: number;
     message: string;

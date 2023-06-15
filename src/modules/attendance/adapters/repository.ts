@@ -6,6 +6,8 @@ export interface AttendanceRepository {
     createGuest(payload: Guest): Promise<Guest>;
     getCode(filter: Partial<Code>): Promise<Code | null>;
     getGuest(filter: Partial<Guest>): Promise<Guest | null>;
+    bulkCreateCodes(codes: Code[]): Promise<Code[]>;
+    getAllCodes(): Promise<Code[]>;
 }
 
 export default class AttendanceRepositoryImpl implements AttendanceRepository {
@@ -38,5 +40,14 @@ export default class AttendanceRepositoryImpl implements AttendanceRepository {
 
     public async getGuest(filter: Partial<Guest>): Promise<Guest | null> {
         return this.guests.findOne(filter);
+    }
+
+    public async bulkCreateCodes(codes: Code[]): Promise<Code[]> {
+        await this.codes.insertMany(codes);
+        return codes;
+    }
+
+    public async getAllCodes(): Promise<Code[]> {
+        return this.codes.find().toArray();
     }
 }

@@ -1,6 +1,6 @@
-import RSVP from "../../components/rsvp";
+import { RSVP } from "components/Rsvp";
 
-export default function RSVPIndex () {
+export default function RSVPIndex() {
     return (
         <RSVP />
     )

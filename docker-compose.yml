@@ -17,7 +17,8 @@ services:
       DB_USER: root
       DB_PASS: db_test
       DB_NAME: test
-      ROOT_TOKEN: token_test
+      AUTH_COOKIE_NAME: auth_cookie
+      NEXT_PUBLIC_BASE_RSVP_URL: http://localhost:3000/rsvp
   db:
     image: mongo:4.4.6
     restart: always

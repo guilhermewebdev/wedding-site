@@ -1,7 +1,7 @@
-import RSVP from "../../components/rsvp";
+import { RSVP } from 'components/Rsvp'
 import { useRouter } from 'next/router'
 
-export default function RSVPIndex () {
+export default function RSVPCode() {
     const router = useRouter()
     const { code } = router.query
 
