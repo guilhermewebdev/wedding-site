@@ -5,6 +5,7 @@ import { ConfirmAttendanceDTO, confirmAttendanceDTOimpl } from "../modules/atten
 import { buildUseForm } from "../hooks/useForm";
 import { apiClient } from "../lib/apiClient";
 import { Field } from "./Field";
+import Spinner from "./Spinner";
 
 interface RSVPProps {
     code?: string;
@@ -43,7 +44,7 @@ export function RSVP(props: RSVPProps) {
                     <Field label="Código" {...register("code")} disabled={!!code} error={errors['code']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
-                        <p>{loading && "Carregando..."}</p>
+                        <p>{loading && <Spinner />}</p>
                         <button disabled={loading} type="submit">Confirmar</button>
                     </div>
                 </form>

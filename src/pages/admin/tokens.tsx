@@ -6,6 +6,12 @@ import { apiClient } from "../../lib/apiClient";
 import { GenerateCodesDTO, generateCodesDTO } from "../../modules/attendance/DTOs/generateCodes";
 import { Code } from "../../modules/attendance/entities";
 import getConfig from 'next/config';
+import Spinner from "components/Spinner";
+
+interface TokensState {
+    codes: Code[];
+    isLoading: boolean;
+}
 
 const { publicRuntimeConfig } = getConfig();
 const {
@@ -14,14 +20,23 @@ const {
 
 const useForm = buildUseForm<GenerateCodesDTO>(generateCodesDTO);
 
-
 export default function Tokens() {
     const { register, onSubmit } = useForm();
-    const [codes, setCodes] = React.useState<Code[]>([])
+    const [state, setCodes] = React.useState<TokensState>({
+        codes: [],
+        isLoading: false,
+    });
+    const { codes, isLoading } = state;
     const fetchCodes = React.useCallback(async () => {
-        const { data } = await apiClient.get('/admin/codes')
-        setCodes(data);
-    }, [])
+        try {
+            setCodes({ ...state, isLoading: true })
+            const { data } = await apiClient.get('/admin/codes')
+            setCodes({ codes: data, isLoading: false });            
+        } catch (error) {
+            setCodes({ ...state, isLoading: false });
+            throw error;
+        }
+    }, [state])
     const submit = React.useCallback(async (form: GenerateCodesDTO) => {
         await apiClient.post('/admin/codes', form);
         await fetchCodes();
@@ -41,7 +56,9 @@ export default function Tokens() {
                     </p>
                 </form>
                 <ul>
-                    {codes.map(({ code }) => {
+                {isLoading 
+                    ? <Spinner /> 
+                    : codes.map(({ code }) => {
                         const link = `${NEXT_PUBLIC_BASE_RSVP_URL}/${code}`;
                         const qrCode = `/api/admin/qr/${code}`;
                         return (

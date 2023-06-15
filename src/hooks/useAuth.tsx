@@ -1,6 +1,7 @@
 import React from "react";
 import { apiClient } from "../lib/apiClient";
 import { useRouter } from "next/router";
+import Spinner from "components/Spinner";
 
 export interface AuthContext {
     isAuthenticated: boolean;
@@ -53,7 +54,9 @@ export function Private(props: AuthProps) {
     }, [isAuthenticated, loading, push])
     if (loading) return (
         <React.Profiler id="Private_Loading" onRender={console.debug}>
-            <main>Carregando...</main>
+            <main>
+                <Spinner />
+            </main>
         </React.Profiler>
     )
     return (

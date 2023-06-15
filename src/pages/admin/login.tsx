@@ -5,6 +5,7 @@ import styles from '../../../styles/Styles.module.css'
 import { apiClient } from "../../lib/apiClient";
 import { useRouter } from "next/router";
 import useAuth from "../../hooks/useAuth";
+import Spinner from "components/Spinner";
 
 const useForm = buildUseForm<CreateSessionDTO>(createSessionDTO);
 
@@ -27,7 +28,7 @@ export default function AddAdmin() {
                 <Field type="password" {...register('password')} label="Senha" error={errors['password']} />
                 <div className={styles.confirmationArea}>
                     <p>{errors['__other']}</p>
-                    <p>{loading && "Carregando..."}</p>
+                    <p>{loading && <Spinner />}</p>
                     <button disabled={loading} type="submit">Entrar</button>
                 </div>
             </form>
