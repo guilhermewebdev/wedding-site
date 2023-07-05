@@ -31,9 +31,7 @@ describe('AttendanceController', () => {
     });
     it('.create', async () => {
         const created = await controller.create({
-            code: v4(),
             name: 'Test Guest',
-            email: 'test@test.com'
         })
         expect(typeof created.id).toEqual('string');
         expect(create).toBeCalled()

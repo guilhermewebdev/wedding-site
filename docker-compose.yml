@@ -3,7 +3,6 @@ services:
   api:
     image: node:lts
     working_dir: /api
-    platform: linux/amd64
     volumes:
       - .:/api:z
     entrypoint: ./entrypoint.sh
@@ -22,7 +21,6 @@ services:
   db:
     image: mongo:4.4.6
     restart: always
-    platform: linux/amd64
     volumes:
       - db-data:/data/db
     environment:

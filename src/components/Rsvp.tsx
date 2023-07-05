@@ -7,21 +7,14 @@ import { apiClient } from "../lib/apiClient";
 import { Field } from "./Field";
 import Spinner from "./Spinner";
 
-interface RSVPProps {
-    code?: string;
-}
 
 const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
-export function RSVP(props: RSVPProps) {
-    const { code } = props;
-    const { errors, register, onSubmit, loading, setValue } = useForm({ code });
+export function RSVP() {
+    const { errors, register, onSubmit, loading } = useForm({ });
     const submit = React.useCallback(async (form: ConfirmAttendanceDTO) => {
         await apiClient.post('/attendance', form);
     }, []);
-    React.useEffect(() => {
-        if(code) setValue('code', code);
-    }, [code, setValue])
     return (
         <>
             <Head>
@@ -33,15 +26,9 @@ export function RSVP(props: RSVPProps) {
                 </div>
                 <div className={`${styles.centralize} ${styles.padding4}`}>
                     <h1 className={styles.title}>Confirme Sua Presença</h1>
-                    {!code && (
-                        <h3 className={styles.fillData}>Preencha os dados e coloque o código em seu voucher. Código único por pessoa!</h3>
-                    )}
                 </div>
                 <form onSubmit={onSubmit(submit)} className={styles.form}>
                     <Field label="Nome" {...register("name")} error={errors['name']} />
-                    <Field label="Email" {...register("email")} error={errors['email']} />
-                    <Field maxLength={11} label="Telefone / WhatsApp" {...register("phone")} error={errors['phone']} />
-                    <Field label="Código" {...register("code")} disabled={!!code} error={errors['code']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
                         {loading 
