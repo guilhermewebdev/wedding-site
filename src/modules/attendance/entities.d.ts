@@ -6,7 +6,4 @@ export interface Code {
 export interface Guest {
     id: string;
     name: string;
-    codeId: string;
-    phone?: string;
-    email?: string;
 }

@@ -1,4 +1,4 @@
-import { Options, hash, verify } from "argon2";
+import { hash, verify } from "argon2";
 import { PasswordHash } from "../modules/admin/service";
 import { argon2id } from "argon2";
 

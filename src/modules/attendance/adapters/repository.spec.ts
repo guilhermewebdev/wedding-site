@@ -30,9 +30,7 @@ describe('AttendanceRepository', () => {
     })
     it('.createGuest', async () => {
         const created = await repository.createGuest({
-            codeId: v4(),
             name: 'Test Guest',
-            email: 'test@test.com',
             id: v4(),
         });
         expect(typeof created.id).toEqual('string');

@@ -1,27 +1,31 @@
 import Head from "next/head";
 import styles from '../../styles/Styles.module.css'
-import React from "react";
+import React, { useState } from "react";
 import { ConfirmAttendanceDTO, confirmAttendanceDTOimpl } from "../modules/attendance/DTOs/createGuest";
 import { buildUseForm } from "../hooks/useForm";
 import { apiClient } from "../lib/apiClient";
 import { Field } from "./Field";
 import Spinner from "./Spinner";
+import Modal from "./Modal";
 
-interface RSVPProps {
-    code?: string;
+interface State {
+    isSuccess: boolean;
+}
+
+const defaultState: State = {
+    isSuccess: false,
 }
 
 const useForm = buildUseForm<ConfirmAttendanceDTO>(confirmAttendanceDTOimpl);
 
-export function RSVP(props: RSVPProps) {
-    const { code } = props;
-    const { errors, register, onSubmit, loading, setValue } = useForm({ code });
+export function RSVP() {
+    const { errors, register, onSubmit, loading } = useForm({});
+    const [state, setState] = useState<State>(defaultState)
+    const { isSuccess } = state;
     const submit = React.useCallback(async (form: ConfirmAttendanceDTO) => {
         await apiClient.post('/attendance', form);
+        setState({ ...state, isSuccess: true })
     }, []);
-    React.useEffect(() => {
-        if(code) setValue('code', code);
-    }, [code, setValue])
     return (
         <>
             <Head>
@@ -33,15 +37,9 @@ export function RSVP(props: RSVPProps) {
                 </div>
                 <div className={`${styles.centralize} ${styles.padding4}`}>
                     <h1 className={styles.title}>Confirme Sua Presença</h1>
-                    {!code && (
-                        <h3 className={styles.fillData}>Preencha os dados e coloque o código em seu voucher. Código único por pessoa!</h3>
-                    )}
                 </div>
                 <form onSubmit={onSubmit(submit)} className={styles.form}>
                     <Field label="Nome" {...register("name")} error={errors['name']} />
-                    <Field label="Email" {...register("email")} error={errors['email']} />
-                    <Field maxLength={11} label="Telefone / WhatsApp" {...register("phone")} error={errors['phone']} />
-                    <Field label="Código" {...register("code")} disabled={!!code} error={errors['code']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
                         {loading 
@@ -50,6 +48,14 @@ export function RSVP(props: RSVPProps) {
                         }
                     </div>
                 </form>
+                <Modal show={isSuccess} onClose={() => setState({ ...state, isSuccess: false })}>
+                    <h3>Agradecemos a sua confirmação!</h3>
+                    <p>Será um prazer termos sua presença.</p>
+                    <p>Nos vemos na cerimônia</p>
+                    <p>
+                        <a className={styles.button} href="/">Ir para o início</a>
+                    </p>
+                </Modal>
             </main>
         </>
     )
