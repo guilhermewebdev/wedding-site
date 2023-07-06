@@ -164,7 +164,7 @@
     flex-direction: column;
 }
 
-.confirmationArea button {
+.confirmationArea button, .button {
     background-color: black;
     color: white;
     padding: 10px 25px;
@@ -172,7 +172,7 @@
     font-family: Montserrat, Arial;
 }
 
-.confirmationArea button:hover {
+.confirmationArea button:hover, .button:hover {
     color: gold;
     cursor: pointer;
 }
@@ -238,4 +238,69 @@
     animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+
+.modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes growth {
+    from {
+        transform: scale(0.7);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+@keyframes appear {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+.modalCard {
+    background-color: white;
+    padding: 10px 30px;
+    padding-bottom: 20px;
+    animation-name: growth;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    justify-content: center;
+    align-items: center;
+    animation-duration: 0.3s;
+    animation-direction: normal;
+    border-radius: 5px;
+}
+
+.closeModal {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.closeModal button {
+    animation-name: appear;
+    animation-duration: 0.3;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-direction: normal;
 }
