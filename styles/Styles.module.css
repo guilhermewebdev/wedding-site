@@ -41,7 +41,8 @@
 }
 
 .title {
-    font-family: "NT Vanilla", "Brush Script MT";
+    font-family: "NT Vanilla", "Montserrat";
+    font-weight: normal;
     font-size: 50px;
     margin-bottom: 15px;
     text-align: center;
