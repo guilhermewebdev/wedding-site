@@ -7,6 +7,7 @@ import { apiClient } from "../lib/apiClient";
 import { Field } from "./Field";
 import Spinner from "./Spinner";
 import Modal from "./Modal";
+import Image from "next/image";
 
 interface State {
     isSuccess: boolean;
@@ -33,6 +34,9 @@ export function RSVP() {
             </Head>
             <main className={`${styles.main} ${styles.centralize}`}>
                 <div className={styles.confirmationNavigation}>
+                    <a href="/">
+                        <Image src={require("../../public/img/logo.png")} alt="Logo" className={styles.logo} />
+                    </a>
                     <a href="/">Início</a>
                 </div>
                 <div className={`${styles.centralize} ${styles.padding4}`}>

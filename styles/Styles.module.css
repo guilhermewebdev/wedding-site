@@ -8,6 +8,11 @@
     src: url(/fonts/Montserrat-VariableFont_wght.ttf);
 }
 
+@font-face {
+    font-family: "NT Vanilla";
+    src: url(/fonts/NT_Vanilla.otf);
+}
+
 
 .main {
     width: 100vw;
@@ -36,7 +41,7 @@
 }
 
 .title {
-    font-family: Calligraffitti, "Brush Script MT";
+    font-family: "NT Vanilla", "Brush Script MT";
     font-size: 50px;
     margin-bottom: 15px;
     text-align: center;
@@ -67,6 +72,14 @@
     padding: 15px;
     width: 100%;
     font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.confirmationNavigation .logo {
+    width: 150px;
+    height: auto;
 }
 
 
@@ -142,8 +155,8 @@
 }
 
 .field input:focus {
-    border-bottom: 2px solid black;
-    color: black;
+    border-bottom: 2px solid white;
+    color: white;
 }
 
 @media (max-width: 420px) {
@@ -170,11 +183,14 @@
     padding: 10px 25px;
     font-size: 15px;
     font-family: Montserrat, Arial;
+    outline: none;
+    border: 1px solid white;
 }
 
 .confirmationArea button:hover, .button:hover {
     color: gold;
     cursor: pointer;
+    border: 1px solid gold;
 }
 
 @keyframes spinner {
