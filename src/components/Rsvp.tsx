@@ -43,7 +43,7 @@ export function RSVP() {
                     <h1 className={styles.title}>Confirme Sua Presença</h1>
                 </div>
                 <form onSubmit={onSubmit(submit)} className={styles.form}>
-                    <Field label="Nome" {...register("name")} error={errors['name']} />
+                    <Field label="Nome Completo" {...register("name")} error={errors['name']} />
                     <div className={styles.confirmationArea}>
                         <p>{errors['__other']}</p>
                         {loading 
