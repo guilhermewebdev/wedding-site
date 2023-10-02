@@ -6,4 +6,5 @@ export interface Code {
 export interface Guest {
     id: string;
     name: string;
+    createdAt: Date;
 }

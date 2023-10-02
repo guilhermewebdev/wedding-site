@@ -22,6 +22,7 @@ export default class AttendanceServiceImpl implements AttendanceService {
         const { ...data } = payload;
         return this.repository.createGuest({
             ...data,
+            createdAt: new Date(),
             id: v4(),
         });
     }
