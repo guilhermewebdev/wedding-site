@@ -3,7 +3,7 @@ import { AttendanceRepository } from "./adapters/repository";
 import { Code, Guest } from "./entities";
 import { UserError } from "../../lib/exceptions";
 
-export interface AttendanceConfirmationPayload extends Omit<Guest, 'id'> {}
+export interface AttendanceConfirmationPayload extends Omit<Guest, 'id' | 'createdAt'> {}
 
 export interface AttendanceService {
     create(payload: AttendanceConfirmationPayload): Promise<Guest>;
